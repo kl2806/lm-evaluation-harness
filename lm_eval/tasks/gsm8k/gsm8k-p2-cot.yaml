@@ -61,6 +61,7 @@ generation_kwargs:
   - 'Q:'
   - </s>
   - <|im_end|>
+  max_gen_toks: 2000
 tag:
 - chain_of_thought
 metadata:
