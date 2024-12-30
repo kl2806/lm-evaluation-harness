@@ -1,3 +1,12 @@
+# GSM8K Experiments
+
+Remove the fields that are not part of the original dataset
+`python remove_non_original_fields.py GSM8k_p2.jsonl GSM8k_p2_only_q_a.jsonl`
+
+
+
+
+
 # Language Model Evaluation Harness
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10256836.svg)](https://doi.org/10.5281/zenodo.10256836)

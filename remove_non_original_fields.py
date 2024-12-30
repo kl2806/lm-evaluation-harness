@@ -4,7 +4,7 @@ in lm-evaluation-harness expects, which contains only the question and answer fi
 Optionally, we also generate a subset of the data with only 1 instance from each template.
 
 Example usage: 
-    python remove_non_original_fields.py GSM8k_p2.jsonl GSM8k_p2_only_q_a.jsonl GSM8k_p2_subset_only_q_a.jsonl
+    python remove_non_original_fields.py GSM_p2.jsonl GSM8k_p2_only_q_a.jsonl GSM8k_p2_subset_only_q_a.jsonl
 
 """
 import json

@@ -1,3 +1,7 @@
+"""
+Script that converts a JSONLines file to Parquet format.
+
+"""
 import argparse
 import pandas as pd
 import json
