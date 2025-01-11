@@ -1,17 +1,19 @@
 """
 Script to preprocess the data into the format that the GSM8k reader
 in lm-evaluation-harness expects, which contains only the question and answer fields.
-Optionally, we also generate a subset of the data with only 1 instance from each template.
+Optionally, we also generate a subset of the data with a subset of the data instance from
+each template.
 
 Example usage: 
-    python remove_non_original_fields.py GSM_p2.jsonl GSM8k_p2_only_q_a.jsonl GSM8k_p2_subset_only_q_a.jsonl
+
+    python remove_non_original_fields.py --input_file data/GSM8k_p2.jsonl --output_file data/GSM8k_p2_only_q_a.jsonl --subset_file data/GSM8k_p2_subset_only_q_a_250.jsonl --limit 5
 
 """
 import json
 import argparse
 from pathlib import Path
 
-def process_jsonl(input_file: str, output_file: str, subset_file) -> None:
+def process_jsonl(input_file: str, output_file: str, subset_file, limit: int) -> None:
     """
     Process a JSONL file to extract only question and answer fields.
     
@@ -32,10 +34,11 @@ def process_jsonl(input_file: str, output_file: str, subset_file) -> None:
                     'question': data.get('question', ''),
                     'answer': data.get('answer', '')
                 }
-                if data["instance"] == 0:
+                if data["instance"] < limit:
                     # Write the filtered data to subset file
                     json.dump(filtered_data, subsetfile, ensure_ascii=False)
                     subsetfile.write('\n')
+                
                 
                 # Write the filtered data to output file
                 json.dump(filtered_data, outfile, ensure_ascii=False)
@@ -51,9 +54,10 @@ def process_jsonl(input_file: str, output_file: str, subset_file) -> None:
 def main():
     # Set up command line argument parser
     parser = argparse.ArgumentParser(description='Process JSONL file to keep only question and answer fields')
-    parser.add_argument('input_file', help='Path to input JSONL file')
-    parser.add_argument('output_file', help='Path to output JSONL file')
-    parser.add_argument('subset_file', help='Path to output subset JSONL file')
+    parser.add_argument('--input_file', help='Path to input JSONL file')
+    parser.add_argument('--output_file', help='Path to output JSONL file')
+    parser.add_argument('--subset_file', help='Path to output subset JSONL file')
+    parser.add_argument('--limit', type=int)   
     
     args = parser.parse_args()
     
@@ -64,7 +68,7 @@ def main():
     
     # Process the file
     try:
-        process_jsonl(args.input_file, args.output_file, args.subset_file)
+        process_jsonl(args.input_file, args.output_file, args.subset_file, args.limit)
         print(f"Successfully processed {args.input_file} to {args.output_file}")
     except Exception as e:
         print(f"An error occurred: {e}")
